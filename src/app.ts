@@ -10,7 +10,7 @@ process.env.APP_ENV = process.env.APP_ENV || 'development';
 import dotenv = require('dotenv');
 
 dotenv.config({
-    path: `${__dirname}/../config/${process.env.APP_ENV}.env`
+    path: `${__dirname}/../config/.env.${process.env.APP_ENV}`
 });
 
 console.log(process.env.APP_FOO);
@@ -21,6 +21,9 @@ import { loadControllers } from 'awilix-express';
 import loadContainer from './container';
 
 const app: express.Application = express();
+
+// JSON Support para los Request
+app.use(express.json());
 
 // Container
 loadContainer(app);

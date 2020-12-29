@@ -1,7 +1,8 @@
 import connector from '../../../../common/persistence/mysql.persistence'
 import { Subscription } from '../../domain/subscription';
+import { SubscriptionRepository } from '../../subscription.repository';
 
-export class SubscriptionRepository {
+export class SubscriptionMySQLRepository implements SubscriptionRepository {
 
     public async all(): Promise<Subscription[]> {
         const [rows] = await connector.execute(
@@ -15,6 +16,19 @@ export class SubscriptionRepository {
         const [rows]: any[] = await connector.execute(
             'SELECT * FROM wallet_subscription WHERE id = ?',
             [id]
+        );
+
+        if(rows.length) {
+            return rows[0] as Subscription;
+        }
+
+        return null;
+    }
+
+    public async findByUserAndCode(user_id: number, code: string): Promise<Subscription | null> {
+        const [rows]: any[] = await connector.execute(
+            'SELECT * FROM wallet_subscription WHERE id = ? AND code = ?',
+            [user_id, code]
         );
 
         if(rows.length) {
