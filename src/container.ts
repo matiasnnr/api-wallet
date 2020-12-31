@@ -5,6 +5,9 @@ import { scopePerRequest } from 'awilix-express';
 import { TestService } from './services/test.service';
 import { SubscriptionMySQLRepository } from './services/repositories/imp/mysql/subscription.repository';
 import { SubscriptionService } from './services/subscription.service';
+import { MovementMySQLRepository } from './services/repositories/imp/mysql/movement.repository';
+import { BalanceMysqlRepository } from './services/repositories/imp/mysql/balance.repository';
+import { MovementService } from './services/movement.service';
 
 export default (app: express.Application): void => {
     
@@ -15,9 +18,12 @@ export default (app: express.Application): void => {
     container.register({
         // repositories
         subscriptionRepository: asClass(SubscriptionMySQLRepository).scoped(),
+        movementRepository: asClass(MovementMySQLRepository).scoped(),
+        balanceRepository: asClass(BalanceMysqlRepository).scoped(),
 
         // services
         subscriptionService: asClass(SubscriptionService).scoped(),
+        movementService: asClass(MovementService).scoped(),
         testService: asClass(TestService).scoped()
     });
     
