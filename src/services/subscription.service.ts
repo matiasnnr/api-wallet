@@ -19,7 +19,7 @@ export class SubscriptionService {
 
     public async store(entry: SubscriptionCreateDTO): Promise<void> {
         // si no existe el usuario en la db, entonces lo guardamos
-        const originalEntry = await this.subscriptionRepository.findByUserAndCode(entry.user_id, entry.code);
+        const originalEntry = await this.subscriptionRepository.findByUserIdAndCode(entry.user_id, entry.code);
 
         if(!originalEntry){
             await this.subscriptionRepository.store(entry as Subscription);

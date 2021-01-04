@@ -6,7 +6,7 @@ export interface SubscriptionRepository {
 
     find(id: number): Promise<Subscription | null>;
 
-    findByUserAndCode(user_id: number, code: string): Promise<Subscription | null>;
+    findByUserIdAndCode(user_id: number, code: string): Promise<Subscription | null>;
 
     store(entry: Subscription): Promise<void>;
 

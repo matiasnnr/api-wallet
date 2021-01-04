@@ -2,7 +2,7 @@ import connector from "../../../../common/persistence/mysql.persistence";
 import { Balance } from "../../domain/balance";
 import { BalanceRepository } from "../../balance.repository";
 
-export class BalanceMysqlRepository implements BalanceRepository {
+export class BalanceMySQLRepository implements BalanceRepository {
     public async find(id: number): Promise<Balance | null> {
         const [rows]: any[] = await connector.execute(
             'SELECT * FROM wallet_balance WHERE id = ?',

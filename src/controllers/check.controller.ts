@@ -23,4 +23,10 @@ export class DefaultController {
         res.send(this.testService.get());
     }
 
+    @route('/user-payload')
+    @GET()
+    public userPayload(req: Request, res: Response): void {
+        res.send((req as any).user);
+    }
+
 }

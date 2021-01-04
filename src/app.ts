@@ -13,20 +13,33 @@ dotenv.config({
     path: `${__dirname}/../config/.env.${process.env.APP_ENV}`
 });
 
-console.log(process.env.APP_FOO);
+console.log(process.env.APP_ENV);
 
 
 import express = require('express');
 import { loadControllers } from 'awilix-express';
 import loadContainer from './container';
+import jwt from 'express-jwt';
+import cors from 'cors';
 
 const app: express.Application = express();
 
 // JSON Support para los Request
 app.use(express.json());
 
+// CORS Support
+app.use(cors());
+
 // Container
 loadContainer(app);
+
+// Jwt
+if (process.env.jwt_secret_key) {
+    app.use(jwt({
+        secret: process.env.jwt_secret_key,
+        algorithms: ['HS256']
+    }).unless({ path: ['/', '/check']}));
+}
 
 // Controllers
 app.use(loadControllers(
